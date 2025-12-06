@@ -92,6 +92,18 @@ a:hover {
   }
 }
 
+#masjid-container {
+  display: grid;
+  gap: 15px;
+}
+
+@media screen and (min-width:768px) {
+  #masjid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
 /* Masjid Card */
 .masjid-card {
   display: flex;
