@@ -1,92 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noida Masjid-Wise Jummah Timings | Live Friday Prayer Time</title>
 
-<title>Noida Masjid-Wise Jummah Timings | Live Friday Prayer Time</title>
-<meta name="description" content="Live and accurate Masjid-wise Jummah (Friday prayer) timings for Noida & NCR. Community-verified. Share updates at prayerdetails@gmail.com." />
-<meta name="keywords" content="Noida Jummah time, Friday prayer Noida, masjid timing Noida, mosque locator, jummah namaz Noida" />
-<meta name="author" content="Noida Jummah Project" />
+  <meta name="description"
+    content="Live, accurate and community-verified Jummah timings for every Masjid in Noida & NCR. Updated weekly.">
 
-<!-- Canonical -->
-<link rel="canonical" href="https://prayerdetails.github.io/" />
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
 
-<!-- OG Meta -->
-<meta property="og:title" content="Noida Masjid-Wise Jummah Timings" />
-<meta property="og:description" content="Live, accurate Friday prayer timings for every Masjid in Noida & NCR." />
-<meta property="og:image" content="https://prayerdetails.github.io/og-image.png" />
-<meta property="og:url" content="https://prayerdetails.github.io/" />
-<meta property="og:type" content="website" />
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Noida Masjid-Wise Jummah Timings" />
-<meta name="twitter:description" content="Find verified Jummah timings for all mosques in Noida & NCR." />
-
-<!-- Favicon -->
-<link rel="icon" href="favicon.png" type="image/png" />
-
-<!-- Stylesheet -->
-<link rel="stylesheet" href="style.css" />
-
-<!-- Structured Data -->
-<script type="application/ld+json">
+  <!-- JSON-LD inserted during build -->
+  <script id="json-ld" type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Noida Masjid-Wise Jummah Timings",
+  "@type": "ItemList",
+  "name": "Noida Jummah Timings",
+  "description": "Verified Jummah timings for Masjids in Noida & NCR.",
   "url": "https://prayerdetails.github.io/",
-  "description": "Live, verified Jummah timings for each mosque in Noida.",
-  "publisher": { "@type": "Organization", "name": "Noida Jummah Project" }
+  "numberOfItems": 3,
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "Place",
+        "name": "Masjid Al-Noor",
+        "identifier": "masjid-al-noor",
+        "address": "Sector 62, Noida",
+        "url": "https://prayerdetails.github.io/#masjid-al-noor",
+        "event": {
+          "@type": "Event",
+          "name": "Jummah Prayer",
+          "startDate": "2025-12-31T12:45 PM:00+05:30",
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "location": {
+            "@type": "Place",
+            "name": "Masjid Al-Noor",
+            "address": "Sector 62, Noida"
+          }
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "Place",
+        "name": "Masjid Al-Huda",
+        "identifier": "masjid-al-huda",
+        "address": "Sector 15, Noida",
+        "url": "https://prayerdetails.github.io/#masjid-al-huda",
+        "event": {
+          "@type": "Event",
+          "name": "Jummah Prayer",
+          "startDate": "2025-12-31T01:00 PM:00+05:30",
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "location": {
+            "@type": "Place",
+            "name": "Masjid Al-Huda",
+            "address": "Sector 15, Noida"
+          }
+        }
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@type": "Place",
+        "name": "Masjid Yaseen",
+        "identifier": "yaseen-masjid",
+        "address": "Shahaberi, Greater Noida West",
+        "url": "https://prayerdetails.github.io/#yaseen-masjid",
+        "event": {
+          "@type": "Event",
+          "name": "Jummah Prayer",
+          "startDate": "2025-12-31T01:20 PM:00+05:30",
+          "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+          "eventStatus": "https://schema.org/EventScheduled",
+          "location": {
+            "@type": "Place",
+            "name": "Masjid Yaseen",
+            "address": "Shahaberi, Greater Noida West"
+          }
+        }
+      }
+    }
+  ]
 }
-</script>
-
+  </script>
 </head>
+
 <body>
 
-<!-- Top Animated Banner -->
- 
-<div id="notify-banner" class="notify-banner">
-  <div class="notify-inner">
-    <span class="pulse-dot"></span>
-    <strong>Help keep Jummah times accurate!</strong>  
-    Email updates to 
-    <a href="mailto:prayerdetails@gmail.com">prayerdetails@gmail.com</a>
-  </div>
-  <button id="close-banner" aria-label="Dismiss" class="notify-close">✕</button>
-</div>
-<div class="container">
+  <header class="hero">
+    <h1>Noida Masjid-Wise Jummah Timings</h1>
+    <p class="lead">Live Friday Prayer Time — updated & verified by the community</p>
+  </header>
 
-<header class="hero">
-  <h1>Noida Masjid-Wise Jummah Timings</h1>
-  <p class="lead">Live Friday Prayer Time — updated & verified by the community</p>
-</header>
+  <main class="main">
+    <section class="panel" aria-labelledby="jummah-heading">
+      <h2 id="jummah-heading">Jummah Timings (Masjid-wise)</h2>
 
-<main class="main">
-  <section class="panel" aria-labelledby="heading-jummah">
-    <h2 id="heading-jummah">Jummah Timings (Masjid-wise)</h2>
-    <p class="sub">Sorted by earliest prayer time</p>
+      <div id="timings-list">
+        
+    <article class="masjid-card" id="masjid-al-noor">
+      <div class="masjid-info">
+        <span class="masjid-icon">🕌</span>
+        <div class="masjid-text">
+          <h3 class="masjid-name">Masjid Al-Noor</h3>
+          <p class="masjid-location">Sector 62, Noida</p>
+        </div>
+      </div>
 
-    <!-- SEO fallback -->
-    <div id="timings-list">
-      <p id="seo-fallback" class="fallback">
-        Loading live Jummah timings…
-      </p>
-      <noscript>
-        <p class="fallback">Enable JavaScript to view live Masjid timings.</p>
-      </noscript>
-    </div>
-  </section>
-</main>
+      <div class="masjid-right">
+        <div class="masjid-time">12:45 PM</div>
+        <div class="masjid-prayers">
+          <span class="masjid-prayer">Fajr</span><span class="masjid-prayer">Dhuhr</span><span class="masjid-prayer">Asr</span><span class="masjid-prayer">Jummah</span>
+        </div>
+        <a href="https://goo.gl/maps/example1" target="_blank" class="masjid-map">📍 Map</a>
+      </div>
+    </article>
+  
 
-<footer class="footer">
-  <p>Send corrections & verified Jummah timings to <a href="mailto:prayerdetails@gmail.com">prayerdetails@gmail.com</a></p>
-  <small>© <span id="year"></span> Noida Jummah Project</small>
-</footer>
-</div>
-<!-- Load JS at bottom (improves SEO & speed) -->
-<script src="script.js"></script>
+    <article class="masjid-card" id="masjid-al-huda">
+      <div class="masjid-info">
+        <span class="masjid-icon">🕌</span>
+        <div class="masjid-text">
+          <h3 class="masjid-name">Masjid Al-Huda</h3>
+          <p class="masjid-location">Sector 15, Noida</p>
+        </div>
+      </div>
+
+      <div class="masjid-right">
+        <div class="masjid-time">01:00 PM</div>
+        <div class="masjid-prayers">
+          <span class="masjid-prayer">Fajr</span><span class="masjid-prayer">Dhuhr</span><span class="masjid-prayer">Asr</span><span class="masjid-prayer">Jummah</span>
+        </div>
+        <a href="https://goo.gl/maps/example2" target="_blank" class="masjid-map">📍 Map</a>
+      </div>
+    </article>
+  
+
+    <article class="masjid-card" id="yaseen-masjid">
+      <div class="masjid-info">
+        <span class="masjid-icon">🕌</span>
+        <div class="masjid-text">
+          <h3 class="masjid-name">Masjid Yaseen</h3>
+          <p class="masjid-location">Shahaberi, Greater Noida West</p>
+        </div>
+      </div>
+
+      <div class="masjid-right">
+        <div class="masjid-time">01:20 PM</div>
+        <div class="masjid-prayers">
+          <span class="masjid-prayer">Fajr</span><span class="masjid-prayer">Dhuhr</span><span class="masjid-prayer">Asr</span><span class="masjid-prayer">Jummah</span>
+        </div>
+        <a href="https://goo.gl/maps/example2" target="_blank" class="masjid-map">📍 Map</a>
+      </div>
+    </article>
+  
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Send corrections & verified Jummah timings to
+      <a href="mailto:prayerdetails@gmail.com">prayerdetails@gmail.com</a>
+    </p>
+    <small>© 2025 Noida Jummah Project</small>
+  </footer>
 
 </body>
+
 </html>
