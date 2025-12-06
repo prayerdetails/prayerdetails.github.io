@@ -1,9 +1,4 @@
 User-agent: *
 Allow: /
 
-# Sitemap locations
-Sitemap: https://prayerdetails.github.io/namaztimelocation/sitemap.xml
-
-# Block duplicate query URLs
-Disallow: /*?q=
-Disallow: /search
+Sitemap: https://prayerdetails.github.io/sitemap.xml

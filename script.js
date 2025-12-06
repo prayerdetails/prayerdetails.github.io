@@ -1,7 +1,7 @@
-// Replace API_URL with your SheetDB / Sheethub API endpoint if different
+// Replace API_URL with your SheetDB / Sheethub API endpoint
 const API_URL = "https://sheetdb.io/api/v1/6dmklr71ru3mu";
 
-// utility to create elements quickly
+/* Utility to create elements */
 function el(name, attrs = {}, children = []) {
   const e = document.createElement(name);
   Object.entries(attrs).forEach(([k, v]) => {
@@ -17,56 +17,63 @@ function el(name, attrs = {}, children = []) {
   return e;
 }
 
+/* Time formatter */
 function formatTime(t) {
   return t || "—";
 }
 
-// render masjid lists
+/* Render masjids — only one section (no duplicate locator list) */
 function renderMasjids(data) {
   const timingsRoot = document.getElementById("timings-list");
-  const locatorRoot = document.getElementById("locator-list");
-  timingsRoot.innerHTML = "";
-  locatorRoot.innerHTML = "";
+  const fallback = document.getElementById("seo-fallback");
 
-  // try to sort by jummah time if present (hh:mm AM/PM)
-  data.sort((a,b) => {
-    const ta = a.jummah || "";
-    const tb = b.jummah || "";
+  timingsRoot.innerHTML = "";
+  if (fallback) fallback.style.display = "none";
+
+  // Sort by Jummah time
+  data.sort((a, b) => {
     const parse = s => {
-      // fallback if not parseable
       const d = new Date("1970/01/01 " + (s || "00:00"));
       return isNaN(d) ? 0 : d.getTime();
     };
-    return parse(ta) - parse(tb);
+    return parse(a.jummah) - parse(b.jummah);
   });
 
-  data.forEach((m, idx) => {
-    // left block
-    const badge = el("div", {class:"masjid-badge"}, [(m.name||"M").slice(0,2).toUpperCase()]);
-    const title = el("h3", {class:"masjid-title"}, m.name || "Unnamed Masjid");
-    const sub = el("div", {class:"masjid-sub"}, `${m.area || ""} • ${m.address || ""}`);
+  data.forEach(m => {
+    const badge = el("div", {class: "masjid-badge"}, [(m.name || "M").slice(0, 2).toUpperCase()]);
+    const title = el("h3", {class: "masjid-title"}, m.name || "Unnamed Masjid");
+    const sub = el("div", {class: "masjid-sub"}, `${m.area || ""} • ${m.address || ""}`);
 
-    const left = el("div", {class:"masjid-meta"}, [badge, el("div", {class:"masjid-body"}, [title, sub])]);
+    const left = el("div", {class: "masjid-meta"}, [
+      badge,
+      el("div", {class: "masjid-body"}, [title, sub])
+    ]);
 
-    // right block
-    const time = el("div", {class:"masjid-time"}, formatTime(m.jummah));
-    const mapBtn = el("a", {class:"masjid-map", href:m.maps || "#", target:"_blank", rel:"noopener noreferrer"}, "Open in Maps");
-    const right = el("div", {class:"masjid-right"}, [time, mapBtn]);
+    const time = el("div", {class: "masjid-time"}, formatTime(m.jummah));
+    const mapBtn = el("a", {
+      class: "masjid-map",
+      href: m.maps || "#",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, "Open in Maps");
 
-    const item = el("div", {class:"masjid", role:"article", "aria-label": m.name}, [left, right]);
+    const right = el("div", {class: "masjid-right"}, [time, mapBtn]);
 
-    // append to both lists (timings list shows main info; locator list could be same for now)
-    timingsRoot.appendChild(item.cloneNode(true));
-    locatorRoot.appendChild(item);
+    const item = el("div", {
+      class: "masjid",
+      role: "article",
+      "aria-label": m.name
+    }, [left, right]);
+
+    timingsRoot.appendChild(item);
   });
 
   if (!data.length) {
     timingsRoot.innerHTML = "<p style='color:#6b7280'>No masjid data available yet.</p>";
-    locatorRoot.innerHTML = "<p style='color:#6b7280'>No locations available yet.</p>";
   }
 }
 
-// fetch data
+/* Load data with SEO fallback */
 function load() {
   fetch(API_URL)
     .then(r => {
@@ -74,23 +81,36 @@ function load() {
       return r.json();
     })
     .then(data => {
-      // SheetDB sometimes returns an object wrapper or array; normalize
       const arr = Array.isArray(data) ? data : (data.data || []);
       renderMasjids(arr);
     })
     .catch(err => {
-      const elErr = document.getElementById("timings-list");
-      if (elErr) elErr.innerHTML = "<p style='color:#b91c1c'>Failed to load data. Please try later.</p>";
+      const timingsRoot = document.getElementById("timings-list");
+      const fallback = document.getElementById("seo-fallback");
+
+      if (fallback) {
+        fallback.innerHTML = "Unable to load live Namaz timings. Please try again.";
+      }
+
+      if (timingsRoot) {
+        timingsRoot.innerHTML +=
+          "<p style='color:#b91c1c; margin-top:10px;'>Failed to load live data.</p>";
+      }
+
       console.error("Load error:", err);
     });
 }
 
-// banner dismiss & year
+/* Banner close + Year */
 document.addEventListener("DOMContentLoaded", () => {
   const close = document.getElementById("close-banner");
-  if (close) close.addEventListener("click", () => {
-    document.getElementById("notify-banner").style.display = "none";
-  });
+  if (close) {
+    close.addEventListener("click", () => {
+      const bn = document.getElementById("notify-banner");
+      if (bn) bn.style.display = "none";
+    });
+  }
+
   const y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
 
