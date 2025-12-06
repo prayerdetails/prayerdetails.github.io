@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<title>Noida Masjid-Wise Jummah Times — Elegant Mosque Timetable</title>
+<meta name="description" content="Elegant, mosque-wise Jummah (Friday) prayer timings for Noida & NCR. See exact Jummah time for each Masjid, verified by the community. Share corrections at prayerdetails@gmail.com." />
+<meta name="keywords" content="Masjid wise Jummah time Noida, Noida mosque timings, mosque-wise jummah noida, Friday namaz Noida, Noida masjid locator" />
+<meta name="author" content="Noida Jummah Project" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Noida Masjid-Wise Jummah Times" />
+<meta property="og:description" content="Find exact Jummah timings for each mosque in Noida & NCR. Community verified and updated." />
+<meta property="og:image" content="https://prayerdetails.github.io/namaztimelocation/og-image.png" />
+<meta property="og:url" content="https://prayerdetails.github.io/namaztimelocation/" />
+<meta property="og:type" content="website" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Noida Masjid-Wise Jummah Times" />
+<meta name="twitter:description" content="Exact mosque-wise Jummah timetable for Noida & NCR. Email corrections to prayerdetails@gmail.com" />
+
+<link rel="canonical" href="https://prayerdetails.github.io/namaztimelocation/" />
+<link rel="icon" href="favicon.png" type="image/png" />
+
+<link rel="stylesheet" href="style.css" />
+
+<!-- Minimal structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Noida Masjid-Wise Jummah Times",
+  "url": "https://prayerdetails.github.io/namaztimelocation/",
+  "description": "Masjid-wise Jummah timings and mosque locator for Noida & NCR."
+}
+</script>
+</head>
+
+<body>
+  <!-- Top slim banner (subtle animated) -->
+  <div id="notify-banner" class="notify-banner" role="region" aria-label="Community help banner">
+    <div class="notify-inner">
+      <svg class="mosque-dot" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l4 4h-3v6h-2V6H8l4-4zM4 12v8h16v-8l-8-5-8 5z"/></svg>
+      <div class="notify-text">Help keep Jummah times accurate — send mosque timings to <a href="mailto:prayerdetails@gmail.com">prayerdetails@gmail.com</a></div>
+    </div>
+    <button class="notify-close" id="close-banner" aria-label="Dismiss">✕</button>
+  </div>
+
+  <header class="site-hero">
+    <div class="hero-inner">
+      <h1 class="brand">Noida Masjid-Wise Jummah Times</h1>
+      <p class="lead">Exact Friday Namaz time for each masjid — community verified & updated.</p>
+    </div>
+  </header>
+
+  <main class="site-main" id="main" role="main">
+    <section class="panel panel-timings" aria-labelledby="timings-heading">
+      <div class="panel-head">
+        <h2 id="timings-heading">Masjid-wise Jummah Timings</h2>
+        <p class="panel-sub">Sorted by time — click a mosque for directions.</p>
+      </div>
+
+      <div id="timings-list" class="grid-list" aria-live="polite">Loading masjid timings…</div>
+    </section>
+
+    <section class="panel panel-locator" aria-labelledby="locator-heading">
+      <div class="panel-head">
+        <h2 id="locator-heading">Mosque Locator</h2>
+        <p class="panel-sub">Open map directions for each masjid.</p>
+      </div>
+
+      <div id="locator-list" class="grid-list">Loading locations…</div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <div class="foot-inner">
+      <p>Non-profit community project — corrections & data: <a href="mailto:prayerdetails@gmail.com">prayerdetails@gmail.com</a></p>
+      <small>© <span id="year"></span> Noida Jummah Project</small>
+    </div>
+  </footer>
+
+<script src="script.js"></script>
+</body>
+</html>
