@@ -8,12 +8,4 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Index HTML -->
-  <url>
-    <loc>https://prayerdetails.github.io/index.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-
 </urlset>
