@@ -104,6 +104,14 @@ a:hover {
 
 }
 
+.panel {
+  margin: 0 0 20px;
+}
+
+.sub-intro {
+  margin-bottom: 20px;
+}
+
 /* Masjid Card */
 .masjid-card {
   display: flex;
