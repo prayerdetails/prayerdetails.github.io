@@ -99,7 +99,7 @@ a:hover {
 
 @media screen and (min-width:768px) {
   #masjid-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 49% 49%;
   }
 
 }
@@ -123,11 +123,10 @@ a:hover {
   box-shadow: 0 4px 18px var(--shadow);
   border-left: 4px solid var(--primary);
   gap: 12px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .masjid-card:hover {
-  transform: translateY(-3px);
   box-shadow: 0 12px 28px var(--shadow);
 }
 
@@ -155,17 +154,14 @@ a:hover {
   font-weight: 700;
   margin: 0 0 2px;
   text-transform: capitalize;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .masjid-location {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--muted);
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-transform: capitalize;
+  margin: 0 0 10px;
 }
 
 .masjid-right {
@@ -173,7 +169,7 @@ a:hover {
   flex-direction: column;
   align-items: flex-end;
   gap: 6px;
-  min-width: 90px;
+  min-width: 150px;
 }
 
 .masjid-time {
@@ -226,4 +222,12 @@ a:hover {
 
 .footer a {
   color: var(--primary);
+}
+
+.masjid-map:hover {
+  text-decoration: none;
+}
+
+h3 a {
+  color: #000;
 }
