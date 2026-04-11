@@ -440,6 +440,7 @@ p {
 .intro-strip,
 .directory-panel,
 .contribute-panel,
+.search-links-panel,
 .faq-panel,
 .insight-card,
 .detail-card,
@@ -678,7 +679,11 @@ p {
 .facts-grid,
 .related-links {
   display: flex;
-  gap: 10px;
+  gap: 16px;
+}
+
+.related-links {
+  flex-wrap: wrap;
 }
 
 .card-header-row,
@@ -990,10 +995,10 @@ p {
 }
 
 .related-link {
-  flex: 1 1 220px;
+  flex: 1 1 200px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 
 .footer {
