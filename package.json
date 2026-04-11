@@ -1,0 +1,13 @@
+{
+  "name": "prayertimelocation",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Static masjid directory and Jummah prayer finder for Noida and nearby NCR areas.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node build.js"
+  }
+}

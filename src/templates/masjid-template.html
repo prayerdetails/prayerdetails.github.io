@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<meta name="description" content="__DESCRIPTION__">
+<meta name="keywords" content="__KEYWORDS__">
+<meta name="author" content="Prayer Details">
+<meta name="theme-color" content="#2f6b4f">
+<meta name="color-scheme" content="light">
+<meta property="og:locale" content="en_IN">
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<link rel="canonical" href="__CANONICAL__">
+<link rel="alternate" hreflang="en-IN" href="__CANONICAL__">
+<link rel="alternate" hreflang="x-default" href="__CANONICAL__">
+<link rel="icon" href="../../favicon.png">
+<link rel="stylesheet" href="../../style.css">
+<meta property="og:title" content="__TITLE__">
+<meta property="og:description" content="__DESCRIPTION__">
+<meta property="og:type" content="article">
+<meta property="og:url" content="__CANONICAL__">
+<meta property="og:site_name" content="Prayer Details">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="__TITLE__">
+<meta name="twitter:description" content="__DESCRIPTION__">
+<script id="json-ld" type="application/ld+json">__JSON_LD__</script>
+</head>
+<body class="detail-page" data-lat="__LAT__" data-lng="__LNG__">
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<header class="site-shell page-header">
+  <div class="topbar">
+    <a class="brand" href="../../index.html">Prayer Details</a>
+    <div class="topbar-actions">
+      <a class="topbar-link" href="../../index.html#directory">Browse all masjids</a>
+      <a class="topbar-cta" href="https://docs.google.com/forms/d/e/1FAIpQLSerlt--tG0yyqmUBEIXzf3pSLbE-RFWqsPhsbtDjKcZ1Qvqlg/viewform?usp=publish-editor" target="_blank" rel="noopener">Click to Add Your Masjid</a>
+    </div>
+  </div>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="../../index.html">Home</a>
+    <span>/</span>
+    <span>__BREADCRUMB__</span>
+  </nav>
+  <section class="detail-hero hero-panel card-surface" aria-labelledby="detail-title">
+    <div>
+      <p class="eyebrow">Masjid details</p>
+      <h1 id="detail-title">__PAGE_HEADING__</h1>
+      <p class="detail-summary">__SUMMARY__</p>
+      <div class="hero-pills">__HERO_PILLS__</div>
+    </div>
+    <aside class="hero-aside finder-panel-accent" aria-label="Friday prayer timing">
+      <p class="hero-aside-label">Friday prayer timings</p>
+      <div class="timing-stack">__TIMING_LIST__</div>
+      <a class="button button-primary button-block" href="__MAP_LINK__" target="_blank" rel="noopener">Open in Google Maps</a>
+    </aside>
+  </section>
+</header>
+
+<main id="main-content" class="site-shell page-main">
+  <section class="content-grid" aria-label="Masjid overview and contact information">
+    <article class="card-surface detail-card">
+      <h2>Masjid overview</h2>
+      <dl class="facts-grid">
+        <div>
+          <dt>Address</dt>
+          <dd>__ADDRESS__</dd>
+        </div>
+        <div>
+          <dt>Area served</dt>
+          <dd>__AREA_SERVED__</dd>
+        </div>
+        <div>
+          <dt>Main prayer type</dt>
+          <dd>__PRIMARY_PRAYER__</dd>
+        </div>
+        <div>
+          <dt>Location coordinates</dt>
+          <dd>__COORDINATES__</dd>
+        </div>
+        <div>
+          <dt>Distance from you</dt>
+          <dd id="distance-from-user">__DISTANCE_FROM_YOU__</dd>
+          <button id="distance-refresh" class="button button-secondary" type="button" style="margin-top:8px;">Use current location</button>
+        </div>
+      </dl>
+    </article>
+
+    <article class="card-surface detail-card">
+      <h2>Management and contact</h2>
+      <div class="contact-block">__CONTACT_BLOCK__</div>
+    </article>
+  </section>
+
+  __PRAYER_TIMES_SECTION__
+
+  <section class="content-grid single-column" aria-label="Additional masjid information">
+    <article class="card-surface detail-card prose-block">
+      <h2>About this masjid</h2>
+      <p>__ABOUT_TEXT__</p>
+      <p>__VISIT_TEXT__</p>
+    </article>
+
+    <article class="card-surface detail-card prose-block">
+      <h2>Common questions</h2>
+      <div class="faq-list">__FAQ_ITEMS__</div>
+    </article>
+
+    <article class="card-surface detail-card">
+      <h2>More masjids in Noida and nearby</h2>
+      <div class="related-links">__RELATED_LINKS__</div>
+    </article>
+  </section>
+</main>
+
+<footer class="site-shell footer footer-detail">
+  <p>Need to correct management details or add a verified phone number? Email <a href="mailto:prayerdetails@gmail.com">prayerdetails@gmail.com</a>.</p>
+  <p class="footer-disclaimer">Non-commercial notice: this directory is informational only and is not a charitable fundraising platform.</p>
+  <small>Last updated __LAST_UPDATED__</small>
+</footer>
+<a class="share-form-fab" href="https://docs.google.com/forms/d/e/1FAIpQLSerlt--tG0yyqmUBEIXzf3pSLbE-RFWqsPhsbtDjKcZ1Qvqlg/viewform?usp=publish-editor" target="_blank" rel="noopener">Add Masjid Now</a>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const output=document.getElementById("distance-from-user");
+  const refreshButton=document.getElementById("distance-refresh");
+  if (!output) {
+    return;
+  }
+
+  const lat=parseFloat(document.body.dataset.lat || "");
+  const lng=parseFloat(document.body.dataset.lng || "");
+
+  if (!isFinite(lat) || !isFinite(lng)) {
+    output.textContent="Distance unavailable";
+    return;
+  }
+
+  if (!navigator.geolocation) {
+    output.textContent="Location not supported";
+    return;
+  }
+
+  function toRad(value) {
+    return value * Math.PI / 180;
+  }
+
+  function calculateDistance(lat1, lon1, lat2, lon2) {
+    const radius=6371;
+    const dLat=toRad(lat2 - lat1);
+    const dLon=toRad(lon2 - lon1);
+    const a=Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return 2 * radius * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function renderDistance(position) {
+    const distanceKm=calculateDistance(position.coords.latitude, position.coords.longitude, lat, lng);
+    output.textContent=distanceKm.toFixed(2) + " km";
+    if (refreshButton) {
+      refreshButton.textContent="Distance updated";
+    }
+  }
+
+  function showFallback() {
+    output.textContent="Enable location to calculate";
+    if (refreshButton) {
+      refreshButton.textContent="Use current location";
+    }
+  }
+
+  function requestDistance() {
+    if (refreshButton) {
+      refreshButton.textContent="Fetching location...";
+    }
+    navigator.geolocation.getCurrentPosition(renderDistance, showFallback, { enableHighAccuracy: true, timeout: 12000, maximumAge: 600000 });
+  }
+
+  if (refreshButton) {
+    refreshButton.addEventListener("click", function () {
+      requestDistance();
+    });
+  }
+
+  if (navigator.permissions && navigator.permissions.query) {
+    navigator.permissions.query({ name: "geolocation" }).then(function (result) {
+      if (result && result.state==="granted") {
+        requestDistance();
+      } else {
+        showFallback();
+      }
+    }).catch(showFallback);
+    return;
+  }
+
+  showFallback();
+});
+</script>
+</body>
+</html>
