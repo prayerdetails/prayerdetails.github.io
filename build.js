@@ -1,8 +1,10 @@
 import fs from "fs/promises";
-
 const SITE_URL = "https://prayerdetails.github.io";
 const SITE_NAME = "Prayer Details";
-const SHEETDB_URL = "https://sheetdb.io/api/v1/6dmklr71ru3mu";
+const GOOGLE_SHEET_ID = "15ysOx4_XDyvnobCSB9S6ut7569OwCbudGytpgE0wdA8";
+const GOOGLE_SHEET_GID = "414096676";
+const GOOGLE_SHEET_TAB_NAME = "masjid details";
+const GOOGLE_SHEET_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?gid=${GOOGLE_SHEET_GID}&sheet=${encodeURIComponent(GOOGLE_SHEET_TAB_NAME)}&tqx=out:json`;
 const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSerlt--tG0yyqmUBEIXzf3pSLbE-RFWqsPhsbtDjKcZ1Qvqlg/viewform";
 const HOME_KEYWORDS = [
   "namaz time noida",
@@ -31,6 +33,8 @@ const INDEX_OUTPUT_URL = new URL("./index.html", import.meta.url);
 const SITEMAP_OUTPUT_URL = new URL("./sitemap.xml", import.meta.url);
 const MASJID_DIRECTORY_URL = new URL("./masjid/", import.meta.url);
 const AREA_DIRECTORY_URL = new URL("./area/", import.meta.url);
+const ADDRESS_FIELD_CANDIDATES = ["masjid address", "address", "location", "masjid location"];
+const MAP_LINK_FIELD_CANDIDATES = ["masjid google map location", "map_link", "google map link", "map link", "masjid location"];
 
 function cleanText(value = "") {
   return String(value).replace(/\s+/g, " ").trim();
@@ -226,7 +230,7 @@ async function resolveMapLinkData(records) {
   const linkCandidates = new Set();
 
   for (const record of records) {
-    const link = normalizeMapLink(getRecordField(record, ["map_link", "masjid location", "google map link", "map link"]));
+    const link = normalizeMapLink(getRecordField(record, MAP_LINK_FIELD_CANDIDATES));
     if (link) {
       linkCandidates.add(link);
     }
@@ -617,6 +621,55 @@ function uniqueSlug(baseSlug, counts) {
   return nextCount === 1 ? baseSlug : `${baseSlug}-${nextCount}`;
 }
 
+function getScheduleSignature(schedules = []) {
+  return schedules
+    .map((item) => `${cleanText(item?.label).toLowerCase()}|${cleanText(item?.time)}`)
+    .sort()
+    .join("||");
+}
+
+function scoreMasjidCompleteness(masjid) {
+  let score = 0;
+
+  if (masjid.mapLink && masjid.mapLink !== "#") score += 2;
+  if (masjid.contactNumber) score += 2;
+  if (masjid.whatsappNumber) score += 1;
+  if (masjid.contactPerson) score += 1;
+  if (masjid.management) score += 1;
+  if (masjid.hasApiPrayerTiming) score += 2;
+  score += (masjid.schedules || []).length;
+
+  return score;
+}
+
+function dedupeMasjidsByLocationAndTime(masjids) {
+  const deduped = new Map();
+
+  for (const masjid of masjids) {
+    const key = `${cleanText(masjid.location).toLowerCase()}||${getScheduleSignature(masjid.schedules)}`;
+    const existing = deduped.get(key);
+
+    if (!existing) {
+      deduped.set(key, masjid);
+      continue;
+    }
+
+    const existingScore = scoreMasjidCompleteness(existing);
+    const currentScore = scoreMasjidCompleteness(masjid);
+
+    if (currentScore > existingScore) {
+      deduped.set(key, masjid);
+      continue;
+    }
+
+    if (currentScore === existingScore && masjid.name.length < existing.name.length) {
+      deduped.set(key, masjid);
+    }
+  }
+
+  return Array.from(deduped.values());
+}
+
 function sentenceList(values) {
   if (!values.length) {
     return "";
@@ -646,13 +699,55 @@ function replaceTokens(template, replacements) {
   );
 }
 
-async function loadSourceData() {
-  const response = await fetch(SHEETDB_URL);
-  if (!response.ok) {
-    throw new Error(`SheetDB fetch failed with ${response.status}`);
+function parseGoogleVisualizationResponse(payload = "") {
+  const startIndex = payload.indexOf("{");
+  const endIndex = payload.lastIndexOf("}");
+
+  if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) {
+    throw new Error("Invalid Google Sheets response format");
   }
 
-  return response.json();
+  return JSON.parse(payload.slice(startIndex, endIndex + 1));
+}
+
+function convertGoogleSheetToRecords(visualizationData) {
+  const columns = visualizationData?.table?.cols || [];
+  const rows = visualizationData?.table?.rows || [];
+  const headers = columns.map((column, index) => {
+    const header = cleanText(column?.label || column?.id || `column_${index + 1}`);
+    return header || `column_${index + 1}`;
+  });
+
+  return rows
+    .map((row) => {
+      const record = {};
+
+      row?.c?.forEach((cell, index) => {
+        const key = headers[index];
+        if (!key) {
+          return;
+        }
+
+        const formattedValue = cleanText(cell?.f || "");
+        const rawValue = cell?.v;
+        const value = formattedValue || (rawValue == null ? "" : String(rawValue));
+        record[key] = cleanText(value);
+      });
+
+      return record;
+    })
+    .filter((record) => Object.values(record).some((value) => cleanText(value)));
+}
+
+async function loadSourceData() {
+  const response = await fetch(GOOGLE_SHEET_URL);
+  if (!response.ok) {
+    throw new Error(`Google Sheet fetch failed with ${response.status}`);
+  }
+
+  const raw = await response.text();
+  const visualizationData = parseGoogleVisualizationResponse(raw);
+  return convertGoogleSheetToRecords(visualizationData);
 }
 
 async function loadDetails() {
@@ -668,8 +763,8 @@ function buildMasjidModel(records, detailsSource, mapLinkData) {
   const grouped = new Map();
 
   for (const record of records) {
-    const location = cleanText(getRecordField(record, ["location", "masjid location"]));
-    const rawMapLink = normalizeMapLink(getRecordField(record, ["map_link", "masjid location", "google map link", "map link"]));
+    const location = cleanText(getRecordField(record, ADDRESS_FIELD_CANDIDATES));
+    const rawMapLink = normalizeMapLink(getRecordField(record, MAP_LINK_FIELD_CANDIDATES));
     const resolved = mapLinkData?.get(rawMapLink);
     const mapLink = resolved?.resolvedLink || rawMapLink;
     const coordinates = resolved?.coordinates || parseCoordinatesFromMapLink(mapLink);
@@ -699,7 +794,7 @@ function buildMasjidModel(records, detailsSource, mapLinkData) {
   const slugCounts = new Map();
   const siteContactEmail = detailsSource.siteContactEmail || "prayerdetails@gmail.com";
 
-  return Array.from(grouped.values())
+  const masjidList = Array.from(grouped.values())
     .map((group, index) => {
       const name = pickDisplayName(group.records);
       const location = titleCase(group.location || "Location not available");
@@ -753,6 +848,8 @@ function buildMasjidModel(records, detailsSource, mapLinkData) {
       };
     })
     .sort((left, right) => left.name.localeCompare(right.name));
+
+  return dedupeMasjidsByLocationAndTime(masjidList);
 }
 
 function generateHomepageJsonLd(masjids, isoDate) {

@@ -1,7 +1,7 @@
 # Prayer Details Static masjid directory and Jummah prayer finder for Noida and nearby NCR areas. ## Project Structure - `src/templates/` - `index-template.html`: homepage template source - `masjid-template.html`: masjid detail template source - `src/styles/` - `style.css`: source stylesheet - `build.js`: static site generator - `masjid-details.json`: manual enrichment data merged during build - Generated output: - `index.html` - `style.css` (generated from `src/styles/style.css`) - `masjid
 /*/index.html`
   - `area/*/
-index.html` - `sitemap.xml` ## How Build Works 1. Pulls masjid records from SheetDB. 2. Merges custom data from `masjid-details.json`. 3. Renders homepage,
+index.html` - `sitemap.xml` ## How Build Works 1. Pulls masjid records directly from a public Google Sheet tab using the Google Visualization API. 2. Merges custom data from `masjid-details.json`. 3. Renders homepage,
 masjid detail pages,
 area pages,
 and sitemap. 4. Copies stylesheet from `src/styles/style.css` to root `style.css`. ## Commands Install dependencies (if needed): ```bash npm install ``` Build static output: ```bash npm run build ``` ## Editing Guide - Edit templates only in `src/templates/`. - Edit CSS only in `src/styles/style.css`. - Do not manually edit generated files (`index.html`, `masjid

@@ -161,8 +161,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function isIos() {
+    return /iP(ad|hone|od)/.test(navigator.userAgent) && !window.MSStream;
+  }
+
+  function iosLocationMessage() {
+    return "Enable location in browser settings to calculate distance. On iOS, open this page in Safari, make sure it is HTTPS, and enable location access in Settings → Safari → Location or Settings → Privacy → Location Services.";
+  }
+
   function showFallback() {
-    output.textContent="Enable location to calculate";
+    output.textContent=isIos() ? iosLocationMessage() : "Enable location in browser settings to calculate distance.";
     if (refreshButton) {
       refreshButton.textContent="Use current location";
     }

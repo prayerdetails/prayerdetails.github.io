@@ -149,6 +149,39 @@ p {
   text-decoration: none;
 }
 
+.help-banner {
+  background: linear-gradient(135deg, rgba(174, 139, 57, 0.1), rgba(47, 107, 79, 0.08));
+  border-bottom: 1px solid rgba(47, 107, 79, 0.15);
+  padding: 8px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-text {
+  white-space: nowrap;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--green-deep);
+  animation: scroll-left 25s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee-text a {
+  text-decoration: underline;
+}
+
+.help-banner:hover .marquee-text {
+  animation-play-state: paused;
+}
+
 .share-form-fab {
   position: fixed;
   right: 14px;
@@ -238,6 +271,7 @@ p {
   max-width: 66ch;
   line-height: 1.82;
   font-weight: 500;
+  margin-bottom: 12px;
 }
 
 .hero-note {
@@ -1110,9 +1144,24 @@ p {
     justify-content: center;
   }
 
+  .finder-actions {
+    gap: 16px;
+    margin-top: 18px;
+  }
+
+  .contribute-actions {
+    gap: 14px;
+  }
+
+  .card-actions {
+    gap: 14px;
+    margin-top: 14px;
+  }
+
   .button,
   .card-actions a {
     width: 100%;
+    padding: 14px 18px;
   }
 
   .autocomplete-dropdown {
@@ -1132,6 +1181,10 @@ p {
   .hero-pills,
   .tag-row {
     flex-wrap: wrap;
+  }
+
+  .search-links-panel {
+    padding-bottom: 18px;
   }
 
   .facts-grid > div {
