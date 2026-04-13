@@ -108,8 +108,9 @@ p {
 
 .floating-location-button {
   position: fixed;
-  top: 16px;
-  right: 16px;
+  top: 8px;
+  left:50%;
+  transform: translateX(-50%) translateY(0);
   z-index: 99;
   display: flex;
   align-items: center;
@@ -124,16 +125,15 @@ p {
   font-weight: 600;
   cursor: pointer;
   transition: all 180ms ease;
-  transform: translateY(0);
 }
 
 .floating-location-button:hover {
-  transform: translateY(-2px);
+  transform: translateX(-50%) translateY(-2px);
   box-shadow: 0 12px 24px rgba(47, 107, 79, 0.25);
 }
 
 .floating-location-button:active {
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
   box-shadow: 0 4px 12px rgba(47, 107, 79, 0.18);
 }
 
@@ -1080,6 +1080,30 @@ p {
   font-size: 0.82rem;
 }
 
+.footer-actions {
+  margin-bottom: 16px;
+}
+
+.footer-cta {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, var(--green), #5ca072);
+  box-shadow: 0 6px 14px rgba(47, 107, 79, 0.2);
+  text-decoration: none;
+  transition: all 180ms ease;
+}
+
+.footer-cta:hover {
+  transform: translateY(-1px);
+  text-decoration: none;
+  box-shadow: 0 8px 18px rgba(47, 107, 79, 0.25);
+}
+
 .footer-disclaimer {
   margin: 10px auto 8px;
   width: fit-content;
@@ -1250,9 +1274,19 @@ p {
 
   .floating-location-button {
     top: 12px;
+    left: auto;
     right: 12px;
+    transform: translateY(0);
     padding: 10px 14px;
     font-size: 0.8rem;
+  }
+
+  .floating-location-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .floating-location-button:active {
+    transform: translateY(0);
   }
 
   .floating-button-text {
