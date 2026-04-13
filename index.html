@@ -833,19 +833,44 @@ as long as the site is opened on HTTPS and location permission is allowed in the
       }
     }
 
+    async function checkGeolocationPermission() {
+      if (!navigator.permissions) {
+        return 'unknown';
+      }
+
+      try {
+        const result = await navigator.permissions.query({ name: 'geolocation' });
+        return result.state;
+      } catch (error) {
+        return 'unknown';
+      }
+    }
+
     async function rankByCurrentLocation() {
       if (!navigator.geolocation) {
         showLocationError("This browser does not support location access.");
         return;
       }
 
+      const permissionState = await checkGeolocationPermission();
+
+      if (permissionState === 'denied') {
+        showLocationError(isIos() ? iosLocationInstructions() : "Location access is blocked. Please enable location permissions in your browser settings and refresh the page.");
+        return;
+      }
+
+      if (permissionState === 'prompt') {
+        locationStatus.textContent = "Location permission will be requested. Please allow access to rank masjids by distance.";
+      } else {
+        locationStatus.textContent = "Getting your current location for accurate nearby ranking...";
+      }
+
       clearLocationWatch();
-      locationStatus.textContent="Getting your current location for accurate nearby ranking...";
 
       try {
-        const position=await requestBestLocation();
+        const position = await requestBestLocation();
         updateLocationFromPosition(position, false);
-        startLocationWatch({ enableHighAccuracy:true, timeout:15000, maximumAge:0 });
+        startLocationWatch({ enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
         applySearch();
       }
       catch (error) {
