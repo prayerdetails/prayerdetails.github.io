@@ -373,6 +373,7 @@ as long as the site is opened on HTTPS and location permission is allowed in the
     let lastKnownPosition=null;
     let locationWatchId=null;
     let selectedSuggestionIndex=-1;
+    let locationInstructionsElement=null;
 
     if ( !container || !cards.length) {
       return;
@@ -399,6 +400,77 @@ as long as the site is opened on HTTPS and location permission is allowed in the
     }
 
     cards.forEach(prepareCard);
+
+    // Location permission and button visibility management
+    function checkLocationPermission() {
+      if (!navigator.permissions || !navigator.permissions.query) {
+        // Fallback for browsers without permissions API
+        return Promise.resolve('unknown');
+      }
+      return navigator.permissions.query({ name: 'geolocation' })
+        .then(function(result) {
+          return result.state; // 'granted', 'denied', or 'prompt'
+        })
+        .catch(function() {
+          return 'unknown';
+        });
+    }
+
+    function updateFloatingButtonVisibility() {
+      checkLocationPermission().then(function(state) {
+        if (state === 'granted') {
+          // Hide button if location is already granted
+          floatingLocationButton.style.display = 'none';
+          hideLocationInstructions();
+        } else {
+          // Show button if location is not granted
+          floatingLocationButton.style.display = 'flex';
+        }
+      });
+    }
+
+    function showLocationInstructions() {
+      hideLocationInstructions(); // Remove any existing instructions
+
+      locationInstructionsElement = document.createElement('div');
+      locationInstructionsElement.className = 'location-instructions';
+      locationInstructionsElement.innerHTML = `
+        <strong>Location Access Required</strong>
+        <p>To find nearby masjids, enable location access:</p>
+        <ol>
+          <li>Click the location icon (🔒) in your browser's address bar</li>
+          <li>Select "Allow" or "Allow location access"</li>
+          <li>Refresh this page and try again</li>
+        </ol>
+        <button class="close-instructions" onclick="this.parentElement.remove()">Close</button>
+      `;
+
+      document.body.appendChild(locationInstructionsElement);
+
+      // Auto-hide after 10 seconds
+      setTimeout(function() {
+        if (locationInstructionsElement && locationInstructionsElement.parentElement) {
+          locationInstructionsElement.remove();
+        }
+      }, 10000);
+    }
+
+    function hideLocationInstructions() {
+      if (locationInstructionsElement && locationInstructionsElement.parentElement) {
+        locationInstructionsElement.remove();
+        locationInstructionsElement = null;
+      }
+    }
+
+    function setButtonLoading(loading) {
+      if (loading) {
+        floatingLocationButton.classList.add('loading');
+        floatingLocationButton.disabled = true;
+      } else {
+        floatingLocationButton.classList.remove('loading');
+        floatingLocationButton.disabled = false;
+      }
+    }
 
     const areaFilters=document.querySelectorAll(".area-filter");
     let activeAreaFilter=null;
@@ -765,6 +837,7 @@ as long as the site is opened on HTTPS and location permission is allowed in the
     function updateLocationFromPosition(position, keepStatusMessage) {
       lastKnownPosition=position;
       sortByDistance(position.coords.latitude, position.coords.longitude, keepStatusMessage);
+      setButtonLoading(false); // Reset loading state
 
       if (!keepStatusMessage) {
         const accuracy=position.coords.accuracy;
@@ -794,6 +867,7 @@ as long as the site is opened on HTTPS and location permission is allowed in the
         return;
       }
 
+      setButtonLoading(true);
       clearLocationWatch();
       locationStatus.textContent="Getting your current location for accurate nearby ranking...";
 
@@ -802,9 +876,12 @@ as long as the site is opened on HTTPS and location permission is allowed in the
         updateLocationFromPosition(position, false);
         startLocationWatch({ enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
         applySearch();
+        updateFloatingButtonVisibility(); // Hide button after successful location access
       }
       catch (error) {
         clearLocationWatch();
+        setButtonLoading(false);
+
         if (/secure connection/i.test(String(error && error.message))) {
           showLocationError(error.message);
           return;
@@ -812,7 +889,8 @@ as long as the site is opened on HTTPS and location permission is allowed in the
 
         // Check error code for more specific handling
         if (error && error.code === 1) {
-          // Permission denied
+          // Permission denied - show instructions
+          showLocationInstructions();
           showLocationError(isIos() ? "Location access denied. On iOS: Open Settings → Safari → Location, set to 'While Using the App', then refresh this page and try again." : "Location access was denied. Please enable location permissions in your browser settings and refresh the page.");
         } else {
           // Other errors (unavailable, timeout)
@@ -1073,12 +1151,22 @@ return map[m];
   locationButton.addEventListener("click", rankByCurrentLocation);
   floatingLocationButton.addEventListener("click", rankByCurrentLocation);
 
+  // Initialize location permission checking and button visibility
+  updateFloatingButtonVisibility();
+
+  // Check for granted permission and auto-rank if available
   if (navigator.permissions && navigator.permissions.query) {
     navigator.permissions.query({ name: "geolocation" }).then(function (result) {
       if (result && result.state==="granted") {
         rankByCurrentLocation();
       }
+      // Listen for permission changes
+      result.addEventListener('change', function() {
+        updateFloatingButtonVisibility();
+      });
     }).catch(function () {
+      // Fallback: still show button
+      updateFloatingButtonVisibility();
     });
   }
 
