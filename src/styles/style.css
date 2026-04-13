@@ -108,8 +108,8 @@ p {
 
 .floating-location-button {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   z-index: 99;
   display: flex;
   align-items: center;
@@ -1249,8 +1249,8 @@ p {
   }
 
   .floating-location-button {
-    top: 16px;
-    right: 16px;
+    top: 12px;
+    right: 12px;
     padding: 10px 14px;
     font-size: 0.8rem;
   }
