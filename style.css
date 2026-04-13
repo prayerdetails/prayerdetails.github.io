@@ -106,6 +106,45 @@ p {
   transform: translateY(0);
 }
 
+.floating-location-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, var(--green), #5ca072);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 18px rgba(47, 107, 79, 0.18);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 180ms ease;
+  transform: translateY(0);
+}
+
+.floating-location-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(47, 107, 79, 0.25);
+}
+
+.floating-location-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(47, 107, 79, 0.18);
+}
+
+.floating-button-text {
+  white-space: nowrap;
+}
+
+.floating-location-button svg {
+  flex-shrink: 0;
+}
+
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -1207,6 +1246,17 @@ p {
     left: 14px;
     right: 14px;
     justify-content: center;
+  }
+
+  .floating-location-button {
+    top: 16px;
+    right: 16px;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+  }
+
+  .floating-button-text {
+    display: none;
   }
 }
 
