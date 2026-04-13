@@ -782,57 +782,6 @@ as long as the site is opened on HTTPS and location permission is allowed in the
       }, options);
     }
 
-    function requestLocation(options) {
-      return new Promise(function (resolve, reject) {
-          navigator.geolocation.getCurrentPosition(resolve, reject, options);
-        }
-      );
-    }
-
-    function watchLocation(options) {
-      return new Promise(function (resolve, reject) {
-          const id=navigator.geolocation.watchPosition(function (position) {
-              if (locationWatchId===null) {
-                locationWatchId=id;
-              }
-              resolve(position);
-            }
-          , reject, options);
-        }
-      );
-    }
-
-    async function requestBestLocation() {
-      if (!window.isSecureContext) {
-        throw new Error("Location needs HTTPS or another secure connection in your browser.");
-      }
-
-      const highAccuracyOptions={
-        enableHighAccuracy:true,
-        timeout:15000,
-        maximumAge:0
-      };
-
-      const fallbackOptions={
-        enableHighAccuracy:false,
-        timeout:20000,
-        maximumAge:300000
-      };
-
-      try {
-        if (navigator.geolocation.watchPosition) {
-          return await watchLocation(highAccuracyOptions);
-        }
-        return await requestLocation(highAccuracyOptions);
-      }
-      catch (error) {
-        if (navigator.geolocation.watchPosition) {
-          return await watchLocation(fallbackOptions);
-        }
-        return requestLocation(fallbackOptions);
-      }
-    }
-
     async function rankByCurrentLocation() {
       if (!navigator.geolocation) {
         showLocationError("This browser does not support location access.");
