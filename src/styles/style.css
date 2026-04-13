@@ -217,6 +217,7 @@ p {
     left: 12px;
     max-width: none;
   }
+}
 
 .topbar {
   display: flex;

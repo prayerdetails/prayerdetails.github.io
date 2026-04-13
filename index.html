@@ -529,7 +529,7 @@ as long as the site is opened on HTTPS and location permission is allowed in the
       }
 
       else {
-        locationStatus.textContent="Search works on every device. Location ranking needs browser permission and a secure connection.";
+        locationStatus.textContent="Search works on every device. Distances are straight-line estimates and may differ from driving or walking directions.";
       }
     }
 
@@ -724,7 +724,7 @@ as long as the site is opened on HTTPS and location permission is allowed in the
         return "Distance unavailable";
       }
 
-      return km.toFixed(2) + " km away";
+      return km.toFixed(2) + " km direct";
     }
 
     function sortByDistance(latitude, longitude, keepStatusMessage) {
@@ -773,7 +773,7 @@ as long as the site is opened on HTTPS and location permission is allowed in the
       );
 
       if ( !keepStatusMessage) {
-        locationStatus.textContent="Directory ranked by nearby masjids using your current location.";
+        locationStatus.textContent="Directory ranked by nearby masjids using your current location. Distances are straight-line estimates.";
       }
     }
 
