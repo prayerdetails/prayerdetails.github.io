@@ -9,6 +9,13 @@
   </url>
 
   <url>
+    <loc>https://prayerdetails.github.io/area/a1-colony-meerut/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://prayerdetails.github.io/area/barsara-market-ghazipur-up/</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -87,6 +94,13 @@
 
   <url>
     <loc>https://prayerdetails.github.io/masjid/hasni-masjid-shahaberi-furniture-market/</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://prayerdetails.github.io/masjid/ibrahim-masjid-meerut-a1-colony-meerut/</loc>
     <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
