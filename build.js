@@ -739,6 +739,11 @@ function convertGoogleSheetToRecords(visualizationData) {
     .filter((record) => Object.values(record).some((value) => cleanText(value)));
 }
 
+function isRecordApproved(record) {
+  const verificationStatus = getRecordField(record, ["verification status", "verification_status", "status"]);
+  return cleanText(verificationStatus).toLowerCase() === "approved";
+}
+
 async function loadSourceData() {
   const response = await fetch(GOOGLE_SHEET_URL);
   if (!response.ok) {
@@ -747,7 +752,7 @@ async function loadSourceData() {
 
   const raw = await response.text();
   const visualizationData = parseGoogleVisualizationResponse(raw);
-  return convertGoogleSheetToRecords(visualizationData);
+  return convertGoogleSheetToRecords(visualizationData).filter(isRecordApproved);
 }
 
 async function loadDetails() {
